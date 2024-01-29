@@ -1,0 +1,28 @@
+version: "2"
+services:
+  php-fpm:
+    image: webdevops/php-dev:8.0
+    hostname: php-fpm
+    volumes:
+      - "./:/app"
+    working_dir: "/app"
+  nginx:
+    image: webdevops/nginx
+    hostname: nginx
+    environment:
+      WEB_DOCUMENT_ROOT: /app/public
+      WEB_DOCUMENT_INDEX: index.php
+      WEB_PHP_SOCKET: php-fpm:9000
+    ports:
+      - "8443:80"
+    volumes:
+      - "./:/app"
+    depends_on:
+      - php-fpm
+  composer:
+    restart: "no"
+    image: composer:2.0
+    command: install --ignore-platform-reqs
+    working_dir: /app
+    volumes:
+      - "./:/app"

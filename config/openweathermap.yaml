@@ -1,0 +1,4 @@
+parameters:
+  openweathermap:
+    url: 'env(%OPENWEATHERMAP_BASE_URL%)'
+    api_key: 'env(%OPENWEATHER_API_KEY%)'
